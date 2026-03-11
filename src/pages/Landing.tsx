@@ -74,7 +74,7 @@ export default function Landing() {
             {codeDigits.map((d, i) => (
               <Input
                 key={i}
-                ref={el => (inputsRef.current[i] = el)}
+                ref={(el) => { inputsRef.current[i] = el }}
                 inputMode="numeric"
                 maxLength={1}
                 value={d}
