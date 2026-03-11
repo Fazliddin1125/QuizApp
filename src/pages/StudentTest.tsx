@@ -231,9 +231,6 @@ export default function StudentTest() {
         <Tabs value={activeSubjectId} onValueChange={setActiveSubjectId} className="lg:col-span-1">
           {session.subjects.map((sub) => {
             const questions = session.questions.filter((q) => q.subjectId === sub._id)
-            const answered = questions.filter((q) => selectedAnswers[q._id]).length
-            const correctCount = questions.filter((q) => feedback[q._id] === 'correct').length
-            const wrongCount = questions.filter((q) => feedback[q._id] === 'wrong').length
             return (
               <TabsContent key={sub._id} value={sub._id} className="mt-4 lg:mt-0">
                 <div className="space-y-5">
