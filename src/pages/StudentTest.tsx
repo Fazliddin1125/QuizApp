@@ -6,7 +6,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { cn } from '@/lib/utils'
 import type { JoinResponse } from '@/types'
 import { Check, X, Sigma, PanelRightClose, ChevronUp } from 'lucide-react'
-import { usePageTitle } from '@/lib/usePageTitle'
 
 const BASE = import.meta.env.VITE_API_URL || 'http://localhost:8080'
 
