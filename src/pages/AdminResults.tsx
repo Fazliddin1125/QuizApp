@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { ArrowLeft, LayoutGrid, Trash2 } from 'lucide-react'
+import { ArrowLeft, LayoutGrid, Trash2, FileSpreadsheet } from 'lucide-react'
 import { api } from '@/lib/api'
 import { createSocket } from '@/lib/socket'
 import { cn } from '@/lib/utils'
@@ -168,9 +168,68 @@ function ResultsTable({
 }) {
   const subjects = Array.isArray(data.subjects) ? data.subjects : []
   const rows = Array.isArray(data.rows) ? data.rows : []
+
+  const handleExportCsv = () => {
+    if (!rows.length || !subjects.length) return
+
+    const subjectColumns: { id: string; name: string }[] = subjects.map((s) => ({
+      id: s._id,
+      name: s.name,
+    }))
+
+    const header = [
+      'Oquvchi',
+      ...subjectColumns.flatMap((s) => [
+        `${s.name} (1010)`,
+        `${s.name} (%)`,
+      ]),
+    ]
+
+    const csvRows: string[] = []
+    csvRows.push(header.join(','))
+
+    rows.forEach((row) => {
+      const base = `${row.studentName} ${row.studentSurname}`.trim()
+      const cells: string[] = [base]
+
+      subjectColumns.forEach((s) => {
+        const st = row.subjectStats.find((x) => x.subjectId === s.id)
+        if (!st) {
+          cells.push('', '')
+          return
+        }
+        const answers = st.cells
+          .map((c) => (c.status === 'correct' ? '1' : '0'))
+          .join('')
+        cells.push(`"${answers}"`, String(st.percent))
+      })
+
+      csvRows.push(cells.join(','))
+    })
+
+    const blob = new Blob([csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `natijalar_${data.test?.code || 'test'}.csv`
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+  }
   return (
             <Card className="overflow-hidden border-0 bg-white shadow-sm">
-              <div className="flex items-center justify-end border-b bg-slate-50/80 px-4 py-2">
+              <div className="flex items-center justify-between border-b bg-slate-50/80 px-4 py-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleExportCsv}
+                  disabled={rows.length === 0 || subjects.length === 0}
+                  className="flex items-center gap-1.5"
+                >
+                  <FileSpreadsheet className="h-3.5 w-3.5" />
+                  Excelga eksport (CSV)
+                </Button>
                 <Button
                   variant="outline"
                   size="sm"
