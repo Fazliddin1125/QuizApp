@@ -108,7 +108,7 @@ export default function Landing() {
       {/* Footer */}
       <footer className="border-t border-slate-200 bg-white py-6">
         <p className="text-center text-sm text-slate-500">
-          © 2026 QuizApp. Barcha huquqlar himoyalangan.
+          QuizApp. Barcha huquqlar himoyalangan.
         </p>
       </footer>
     </div>
