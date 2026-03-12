@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { User, Clock, Lock, BarChart3, ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { usePageTitle } from '@/lib/usePageTitle'
+import { AppHeader } from '@/components/AppHeader'
 
 const BASE = import.meta.env.VITE_API_URL || 'http://localhost:8080'
 
@@ -14,6 +16,8 @@ export default function JoinByCode() {
   const [surname, setSurname] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  usePageTitle('Ism va familiya')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -40,7 +44,12 @@ export default function JoinByCode() {
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.message || 'Xato')
-      localStorage.setItem('studentSession', JSON.stringify(data))
+      const extended = {
+        ...data,
+        studentName: name.trim(),
+        studentSurname: surname.trim(),
+      }
+      localStorage.setItem('studentSession', JSON.stringify(extended))
       navigate('/student/test', { replace: true })
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Xato')
@@ -50,8 +59,10 @@ export default function JoinByCode() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100 p-4">
-      <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-lg">
+    <div className="min-h-screen bg-slate-100">
+      <AppHeader />
+      <div className="mx-auto flex max-w-md items-center justify-center px-4 py-10">
+      <div className="w-full rounded-2xl border border-slate-200 bg-white p-8 shadow-lg">
         <h1 className="text-left text-lg font-bold uppercase tracking-wide text-slate-800">
           Ism va familiya
         </h1>
@@ -109,6 +120,7 @@ export default function JoinByCode() {
             <span className="text-xs font-medium uppercase tracking-wide">Tahlil</span>
           </div>
         </div>
+      </div>
       </div>
     </div>
   )

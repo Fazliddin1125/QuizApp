@@ -7,6 +7,7 @@ import { api } from '@/lib/api'
 import { createSocket } from '@/lib/socket'
 import { cn } from '@/lib/utils'
 import type { ResultsResponse, ResultRow } from '@/types'
+import { usePageTitle } from '@/lib/usePageTitle'
 
 type CellDisplay = 'correct' | 'wrong' | 'unanswered'
 
@@ -21,6 +22,8 @@ export default function AdminResults() {
   const [error, setError] = useState<string | null>(null)
   const [liveConnected, setLiveConnected] = useState(false)
   const [clearing, setClearing] = useState(false)
+
+  usePageTitle(data?.test?.name ? `Natijalar: ${data.test.name}` : 'Natijalar')
 
   const load = () => {
     if (!id) {

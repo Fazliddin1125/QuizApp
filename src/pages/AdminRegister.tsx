@@ -6,6 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { api } from '@/lib/api'
 import type { User } from '@/types'
+import { usePageTitle } from '@/lib/usePageTitle'
+import { AppHeader } from '@/components/AppHeader'
 
 export default function AdminRegister() {
   const navigate = useNavigate()
@@ -14,6 +16,8 @@ export default function AdminRegister() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  usePageTitle('O‘qituvchi — ro‘yxatdan o‘tish')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -36,7 +40,9 @@ export default function AdminRegister() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted/30 p-4">
+    <div className="min-h-screen bg-muted/30">
+      <AppHeader />
+      <div className="flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>O‘qituvchi — ro‘yxatdan o‘tish</CardTitle>
@@ -82,6 +88,7 @@ export default function AdminRegister() {
           </form>
         </CardContent>
       </Card>
+      </div>
     </div>
   )
 }

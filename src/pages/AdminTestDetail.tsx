@@ -10,6 +10,7 @@ import type { Subject } from '@/types'
 import type { Question } from '@/types'
 import SubjectForm from '@/components/SubjectForm'
 import QuestionForm from '@/components/QuestionForm'
+import { usePageTitle } from '@/lib/usePageTitle'
 
 export default function AdminTestDetail() {
   const { id } = useParams<{ id: string }>()
@@ -19,6 +20,8 @@ export default function AdminTestDetail() {
   const [questionsBySubject, setQuestionsBySubject] = useState<Record<string, Question[]>>({})
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('')
+
+  usePageTitle(test ? `Test: ${test.name}` : 'Test tafsilotlari')
 
   const loadTest = () => {
     if (!id) return Promise.resolve()

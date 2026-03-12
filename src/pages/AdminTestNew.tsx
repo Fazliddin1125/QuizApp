@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { api } from '@/lib/api'
 import type { Test } from '@/types'
+import { usePageTitle } from '@/lib/usePageTitle'
 
 export default function AdminTestNew() {
   const navigate = useNavigate()
@@ -13,6 +14,8 @@ export default function AdminTestNew() {
   const [durationInput, setDurationInput] = useState('45')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  usePageTitle('Yangi test')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

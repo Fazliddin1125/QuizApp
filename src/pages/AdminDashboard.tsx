@@ -2,14 +2,18 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Plus, LogOut, ClipboardList } from 'lucide-react'
+import { Plus, LogOut } from 'lucide-react'
 import { api } from '@/lib/api'
 import type { Test } from '@/types'
+import { usePageTitle } from '@/lib/usePageTitle'
+import { AppHeader } from '@/components/AppHeader'
 
 export default function AdminDashboard() {
   const navigate = useNavigate()
   const [tests, setTests] = useState<Test[]>([])
   const [loading, setLoading] = useState(true)
+
+  usePageTitle('Admin — testlar')
 
   useEffect(() => {
     api
@@ -35,12 +39,8 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <header className="border-b border-slate-200 bg-white">
-        <div className="container mx-auto flex h-14 items-center justify-between px-4">
-          <span className="flex items-center gap-2 font-semibold text-slate-900">
-            <ClipboardList className="h-6 w-6 text-slate-600" />
-            Admin
-          </span>
+      <AppHeader
+        right={
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" asChild>
               <Link to="/">Bosh sahifa</Link>
@@ -50,8 +50,8 @@ export default function AdminDashboard() {
               Chiqish
             </Button>
           </div>
-        </div>
-      </header>
+        }
+      />
 
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">

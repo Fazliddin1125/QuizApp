@@ -1,13 +1,17 @@
 import { useRef, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { LayoutGrid, GraduationCap, Plus, ArrowRight } from "lucide-react"
+import { GraduationCap, Plus, ArrowRight } from "lucide-react"
+import { usePageTitle } from "@/lib/usePageTitle"
+import { AppHeader } from "@/components/AppHeader"
 
 export default function Landing() {
   const navigate = useNavigate()
   const [codeDigits, setCodeDigits] = useState<string[]>(Array(6).fill(""))
   const inputsRef = useRef<Array<HTMLInputElement | null>>([])
+
+  usePageTitle("Testga qo'shilish")
 
   const handleDigitChange = (idx: number, value: string) => {
     const v = value.replace(/\D/g, "").slice(-1)
@@ -34,29 +38,7 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      {/* Header — fixed */}
-      <header className="sticky top-0 z-50 border-b border-slate-200 bg-white">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
-          <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 text-white">
-              <LayoutGrid className="h-5 w-5" />
-            </div>
-            <span className="text-lg font-bold text-slate-900">QuizApp</span>
-          </div>
-          <nav className="flex items-center gap-6">
-            <a href="#" className="text-sm font-medium text-slate-700 hover:text-slate-900">Asosiy</a>
-            <a href="#" className="text-sm font-medium text-slate-700 hover:text-slate-900">Qo&apos;llanma</a>
-            <a href="#" className="text-sm font-medium text-slate-700 hover:text-slate-900">Bog&apos;lanish</a>
-            <Button
-              size="sm"
-              className="rounded-lg bg-blue-600 px-4 hover:bg-blue-700"
-              onClick={() => navigate("/admin/login")}
-            >
-              Kirish
-            </Button>
-          </nav>
-        </div>
-      </header>
+      <AppHeader />
 
       {/* Main — centered, desktop max width */}
       <main className="mx-auto w-full max-w-xl flex-1 px-4 py-12 md:py-16">
@@ -126,7 +108,7 @@ export default function Landing() {
       {/* Footer */}
       <footer className="border-t border-slate-200 bg-white py-6">
         <p className="text-center text-sm text-slate-500">
-          © 2024 QuizApp. Barcha huquqlar himoyalangan.
+          © 2026 QuizApp. Barcha huquqlar himoyalangan.
         </p>
       </footer>
     </div>
