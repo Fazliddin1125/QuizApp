@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate} from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { GraduationCap, Plus, ArrowRight } from "lucide-react"
